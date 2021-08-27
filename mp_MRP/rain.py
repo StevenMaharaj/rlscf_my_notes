@@ -1,0 +1,2 @@
+from typing import Mapping
+from distribution import FiniteDistribution
