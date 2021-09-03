@@ -1,5 +1,5 @@
 import numpy as np
-
+from typing import Mapping, Optional
 from dataclasses import  dataclass
 
 @dataclass
@@ -23,3 +23,23 @@ def simulation(process, start_state):
     while True:
         yield state
         state = process.next_state(state)
+
+
+
+handy_map: Mapping[Optional[bool], int] = {True: -1, False: 1, None: 0}
+@dataclass
+class Process2:
+    @dataclass
+    class State:
+        price: int
+        is_prev_move_up: Optional[bool]
+
+    alpha2: float = 0.75
+
+    def up_prob(self,state: State) -> float:
+        return 0.5*(1.0 - self.alpha2*handy_map[state.is_prev_move_up])
+
+    def next_state(self, state: State) -> State:
+        up_move: int = np.random.binomial(1, self.up_prob(state),1)[0]
+        return Process2.State(price = state.price + up_move*2 - 1, is_prev_move_up=bool(up_move))
+
