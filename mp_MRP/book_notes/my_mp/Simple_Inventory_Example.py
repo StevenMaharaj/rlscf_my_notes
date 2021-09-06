@@ -56,4 +56,5 @@ user_poisson_lambda = 1.0
 si_mp = SimpleInventoryMPFinite(capacity=user_capacity,
 poisson_lambda=user_poisson_lambda)
 
+print("res")
 print(si_mp)
